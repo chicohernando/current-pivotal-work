@@ -1,0 +1,8 @@
+tbody tr:nth-child(odd) {
+	background-color: #f7f7f9;
+}
+
+.story_number {
+	background-color: transparent;
+	border: 0 none;
+}

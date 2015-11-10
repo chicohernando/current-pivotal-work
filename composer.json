@@ -1,0 +1,8 @@
+{
+    "require": {
+        "silex/silex": "~1.3",
+        "drzippie/pivotal-tracker-api": "^1.1",
+        "twig/twig": "^1.22",
+        "symfony/twig-bridge": "^2.7"
+    }
+}
