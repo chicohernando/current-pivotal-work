@@ -1,5 +1,4 @@
 <?php
-// web/index.php
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new Silex\Application();
@@ -16,6 +15,10 @@ $app->get('/key/{key}/project/{project_id}/owner/{owner}', function (Silex\Appli
         $app->abort(404, 'You must supply a project id');
     }
     
+    if (empty($owner)) {
+        $app->abort(404, 'You must supply owner initials');
+    }
+
     $pivotal_tracker =  new \PivotalTrackerV5\Client($key, $project_id);
     $stories = $pivotal_tracker->getStories('owner:' . $owner . ' -state:unstarted -state:accepted');
     return $app['twig']->render('index.twig', array(
