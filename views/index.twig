@@ -17,6 +17,7 @@
                 <tr>
                     <th>Story Name</th>
                     <th>PT #</th>
+                    <th>Owner</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,7 @@
                     <tr>
                         <td><a href="{{ story.url }}" target="_blank">{{ story.name }}</a></td>
                         <td><input class="story_number" type="text" value="[#{{ story.id }}]" /></td>
+                        <td>{{ story.owner_initials|join(', ') }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

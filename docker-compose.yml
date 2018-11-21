@@ -1,0 +1,14 @@
+version: "3.2"
+
+services:
+    php:
+        build: ./php/
+        ports:
+            - ${PORT}:80
+        environment:
+            PIVOTAL_TRACKER_API_KEY: ${PIVOTAL_TRACKER_API_KEY}
+            PIVOTAL_TRACKER_PROJECT_ID: ${PIVOTAL_TRACKER_PROJECT_ID}
+            PIVOTAL_TRACKER_OWNER: ${PIVOTAL_TRACKER_OWNER}
+            PIVOTAL_TRACKER_TEAM_INITIALS: ${PIVOTAL_TRACKER_TEAM_INITIALS}
+        volumes:
+            - ${REPOSITORY_PATH}:/srv/src/current-pivotal-work:cached

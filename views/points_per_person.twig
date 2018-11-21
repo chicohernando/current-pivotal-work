@@ -1,0 +1,76 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Points Per Person</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/index.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+    
+          function drawChart() {
+            var datas = [];
+            var headers = jQuery('th').map(function(i,e) { return e.innerHTML;}).get();
+            jQuery.each(jQuery('tr:gt(0)').not(':last'), function(i,e ) {
+               datas.push(jQuery('td', e).map(function(i,e) {
+                                                 return (i === 0 ? e.innerHTML : parseInt(e.innerHTML, 10)); 
+                                              }).get()
+                         );
+            });
+            datas.reverse();
+            datas.unshift(headers);
+            var data = google.visualization.arrayToDataTable(datas);
+    
+            var options = {
+              title: 'Points Per Person',
+              curveType: 'function',
+              legend: { position: 'bottom' }
+            };
+    
+            var chart = new google.visualization.LineChart(document.getElementById('chart'));
+    
+            chart.draw(data, options);
+          }
+        </script>
+    </head>
+    <body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Epic</th>
+                    {% for owner in owners %}
+                        <th>{{ owner }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for epic in epics %}
+                    <tr>
+                        <td>{{ epic }}</td>
+                        {% for owner in owners %}
+                            {% if attribute(attribute(points_per_person, epic), owner) >= 15 %}
+                                <td class="success">
+                            {% elseif attribute(attribute(points_per_person, epic), owner) >= 13 %}
+                                <td class="info">
+                            {% elseif attribute(attribute(points_per_person, epic), owner) >= 10 %}
+                                <td class="warning">
+                            {% else %}
+                                <td class="danger">
+                            {% endif %}
+                            {{ attribute(attribute(points_per_person, epic), owner) }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div id="chart" style="width: 1280px; height: 900px;"></div>
+    </body>
+</html>
