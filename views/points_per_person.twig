@@ -54,7 +54,11 @@
             <tbody>
                 {% for epic in epics %}
                     <tr>
-                        <td>{{ epic }}</td>
+                        {% if epic == "Average" %}
+                            <td>{{ epic }}</td>
+                        {% else %}
+                            <td><a href="/ppp/{{ epic }}?number_of_iterations={{ number_of_iterations }}">{{ epic }}</a></td>
+                        {% endif %}
                         {% for owner in owners %}
                             {% if attribute(attribute(points_per_person, epic), owner) >= 15 %}
                                 <td class="success">

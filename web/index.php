@@ -82,7 +82,8 @@ $app->get('/ppp/{starting_label}', function (Request $request, Silex\Application
     return $app['twig']->render('points_per_person.twig', array(
         'owners' => $owners,
         'epics' => $epics,
-        'points_per_person' => $points_per_person
+        'points_per_person' => $points_per_person,
+        'number_of_iterations' => $number_of_iterations
     ));
 });
 
