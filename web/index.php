@@ -63,9 +63,12 @@ $app->get('/ppp/{starting_label}', function (Request $request, Silex\Application
     $epics = generate_epics_based_on_starting_label($starting_label, $number_of_iterations);
 
     foreach ($epics as $epic) {
+        $iteration_start_date = date('Y-m-d', strtotime('-3 monday', strtotime($epic)));
+        $iteration_end_date = date('Y-m-d', strtotime('-1 sunday', strtotime($epic)));
+
         foreach ($owners as $owner) {
             $points_per_person[$epic][$owner] = 0;
-            $stories = $pivotal_tracker->getStories('owner:' . $owner . ' state:accepted label:' . $epic);
+            $stories = $pivotal_tracker->getStories('owner:' . $owner . ' state:accepted accepted_since:"' . $iteration_start_date . '" accepted_before:"' . $iteration_end_date . '"');
             foreach ($stories as $story) {
                 $points_per_person[$epic][$owner] += $story->estimate;
                 $sums_per_person[$owner] += $story->estimate;
