@@ -18,10 +18,10 @@
     
           function drawChart() {
             var datas = [];
-            var headers = jQuery('th').map(function(i,e) { return e.innerHTML;}).get();
+            var headers = jQuery('th').map(function(i,e) { return e.textContent;}).get();
             jQuery.each(jQuery('tr:gt(0)').not(':last'), function(i,e ) {
                datas.push(jQuery('td', e).map(function(i,e) {
-                                                 return (i === 0 ? e.innerHTML : parseInt(e.innerHTML, 10)); 
+                                                 return (i === 0 ? e.textContent : parseInt(e.innerHTML, 10)); 
                                               }).get()
                          );
             });
@@ -45,31 +45,32 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Epic</th>
+                    <th>Iteration</th>
                     {% for owner in owners %}
                         <th>{{ owner }}</th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                {% for epic in epics %}
+                {% for iteration in iterations %}
                     <tr>
-                        {% if epic == "Average" %}
-                            <td>{{ epic }}</td>
+                        {% if iteration == "Average" %}
+                            <td>{{ iteration }}</td>
                         {% else %}
-                            <td><a href="/ppp/{{ epic }}?number_of_iterations={{ number_of_iterations }}">{{ epic }}</a></td>
+                            <td><a href="/ppp/{{ iteration }}?number_of_iterations={{ number_of_iterations }}">{{ iteration }}</a></td>
                         {% endif %}
+                        
                         {% for owner in owners %}
-                            {% if attribute(attribute(points_per_person, epic), owner) >= 15 %}
+                            {% if attribute(attribute(points_per_person, iteration), owner) >= 15 %}
                                 <td class="success">
-                            {% elseif attribute(attribute(points_per_person, epic), owner) >= 13 %}
+                            {% elseif attribute(attribute(points_per_person, iteration), owner) >= 13 %}
                                 <td class="info">
-                            {% elseif attribute(attribute(points_per_person, epic), owner) >= 10 %}
+                            {% elseif attribute(attribute(points_per_person, iteration), owner) >= 10 %}
                                 <td class="warning">
                             {% else %}
                                 <td class="danger">
                             {% endif %}
-                            {{ attribute(attribute(points_per_person, epic), owner) }}</td>
+                            {{ attribute(attribute(points_per_person, iteration), owner) }}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}

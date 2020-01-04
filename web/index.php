@@ -31,7 +31,7 @@ function populate_owner_initials($stories, $memberships) {
     }
 }
 
-function generate_epics_based_on_starting_label($starting_label, $number_of_iterations) {
+function generate_iterations_based_on_starting_label($starting_label, $number_of_iterations) {
     $epics = array();
     $date = strtotime($starting_label);
     for ($i = 0; $i < $number_of_iterations; $i++) {
@@ -53,21 +53,25 @@ $app->get('/ppp/{starting_label}', function (Request $request, Silex\Application
     $query_parameters = $request->query->all();
     $number_of_iterations = isset($query_parameters['number_of_iterations']) ? $query_parameters['number_of_iterations'] : 10;
     $owners = $team_initials;
-    $epics = array();
+    $iterations = array();
     $points_per_person = array();
     $sums_per_person = array();
     foreach ($owners as $owner) {
         $sums_per_person[$owner] = 0;
     }
 
-    $epics = generate_epics_based_on_starting_label($starting_label, $number_of_iterations);
+    $iterations = generate_iterations_based_on_starting_label($starting_label, $number_of_iterations);
 
-    foreach ($epics as $epic) {
+    foreach ($iterations as $iteration) {
+        //TODO make sure to remove work specific date logic
+        $iteration_start_date = date('Y-m-d', strtotime('-3 monday', strtotime($iteration)));
+        $iteration_end_date = date('Y-m-d', strtotime('-1 sunday', strtotime($iteration)));
+
         foreach ($owners as $owner) {
-            $points_per_person[$epic][$owner] = 0;
-            $stories = $pivotal_tracker->getStories('owner:' . $owner . ' state:accepted label:' . $epic);
+            $points_per_person[$iteration][$owner] = 0;
+            $stories = $pivotal_tracker->getStories('owner:' . $owner . ' state:accepted accepted_since:"' . $iteration_start_date . '" accepted_before:"' . $iteration_end_date . '"');
             foreach ($stories as $story) {
-                $points_per_person[$epic][$owner] += $story->estimate;
+                $points_per_person[$iteration][$owner] += $story->estimate;
                 $sums_per_person[$owner] += $story->estimate;
             }
         }
@@ -77,11 +81,11 @@ $app->get('/ppp/{starting_label}', function (Request $request, Silex\Application
         $points_per_person['Average'][$owner] = $sums_per_person[$owner] / $number_of_iterations;
     }
 
-    $epics []= 'Average';
+    $iterations []= 'Average';
 
     return $app['twig']->render('points_per_person.twig', array(
         'owners' => $owners,
-        'epics' => $epics,
+        'iterations' => $iterations,
         'points_per_person' => $points_per_person,
         'number_of_iterations' => $number_of_iterations
     ));
@@ -113,17 +117,17 @@ $app->get('/nutron/ppp/{starting_date}', function (Request $request, Silex\Appli
     $sums_per_person = array();
     $owners = $nutron_team_initials;
 
-    $epics = generate_epics_based_on_starting_label($starting_date, $number_of_iterations);
+    $iterations = generate_iterations_based_on_starting_label($starting_date, $number_of_iterations);
     $pivotal_tracker = new \PivotalTrackerV5\Client($key, $nutron_project_id);
 
-    foreach ($epics as $epic) {
-        $start_timestamp = strtotime($epic);
-        $accepted_filter = 'accepted:' . $epic . '..' . date('Y-m-d', strtotime('+2 saturday', $start_timestamp));
+    foreach ($iterations as $iteration) {
+        $start_timestamp = strtotime($iteration);
+        $accepted_filter = 'accepted:' . $iteration . '..' . date('Y-m-d', strtotime('+2 saturday', $start_timestamp));
         foreach ($owners as $owner) {
-            $points_per_person[$epic][$owner] = 0;
+            $points_per_person[$iteration][$owner] = 0;
             $stories = $pivotal_tracker->getStories('owner:' . $owner . ' ' . $accepted_filter);
             foreach ($stories as $story) {
-                $points_per_person[$epic][$owner] += $story->estimate;
+                $points_per_person[$iteration][$owner] += $story->estimate;
                 $sums_per_person[$owner] += $story->estimate;
             }
         }
@@ -133,12 +137,13 @@ $app->get('/nutron/ppp/{starting_date}', function (Request $request, Silex\Appli
         $points_per_person['Average'][$owner] = $sums_per_person[$owner] / $number_of_iterations;
     }
 
-    $epics []= 'Average';
+    $iterations []= 'Average';
 
     return $app['twig']->render('points_per_person.twig', array(
         'owners' => $owners,
-        'epics' => $epics,
-        'points_per_person' => $points_per_person
+        'iterations' => $iterations,
+        'points_per_person' => $points_per_person,
+        'number_of_iterations' => $number_of_iterations
     ));
 });
 
