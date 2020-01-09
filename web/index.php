@@ -49,6 +49,23 @@ $app->get('/', function(Silex\Application $app) use ($key, $project_id, $pivotal
     ));
 });
 
+$app->get('/project/{project_id}/', function(Silex\Application $app, $project_id) use ($key) {
+    $pivotal_tracker_client = new \PivotalTrackerV5\Client($key, $project_id);
+
+    $iterations = $pivotal_tracker_client->getProjectIterations(array(
+        'limit' => 10,
+        'offset' => -9,
+        'scope' => 'done_current',
+        'fields' => 'number,team_strength,accepted_points,effective_points,velocity,start,finish'
+    ));
+    $iterations = array_reverse($iterations);
+
+    return $app['twig']->render('project.twig', array(
+        'project_id' => $project_id,
+        'iterations' => $iterations
+    ));
+});
+
 $app->get('/ppp/{starting_label}', function (Request $request, Silex\Application $app, $starting_label) use ($key, $project_id, $pivotal_tracker, $team_initials) {
     $query_parameters = $request->query->all();
     $number_of_iterations = isset($query_parameters['number_of_iterations']) ? $query_parameters['number_of_iterations'] : 10;
