@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09ae9601621cbfa1803ecf8f204808ed",
+    "content-hash": "ffa4c3c1cd6fe72a9bfd7615bf45f8ae",
     "packages": [
         {
             "name": "chicohernando/pivotal-tracker-api",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chicohernando/pivotal-tracker-api.git",
-                "reference": "af590fff784f2c2e74b70f52ae23dcd129ba4aeb"
+                "reference": "3d95f5e52bc970aa928d66e20ae058ed2d68225b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chicohernando/pivotal-tracker-api/zipball/af590fff784f2c2e74b70f52ae23dcd129ba4aeb",
-                "reference": "af590fff784f2c2e74b70f52ae23dcd129ba4aeb",
+                "url": "https://api.github.com/repos/chicohernando/pivotal-tracker-api/zipball/3d95f5e52bc970aa928d66e20ae058ed2d68225b",
+                "reference": "3d95f5e52bc970aa928d66e20ae058ed2d68225b",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,7 @@
                 "pivotaltracker",
                 "v5"
             ],
-            "time": "2020-01-08T04:11:44+00:00"
+            "time": "2020-01-10T22:00:45+00:00"
         },
         {
             "name": "pimple/pimple",
