@@ -15,20 +15,23 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Project Name</th>
-                    <th>Description</th>
+                    <th>Story Name</th>
+                    <th>PT #</th>
+                    <th>Owner</th>
                 </tr>
             </thead>
             <tbody>
-                {% for project in projects %}
+                {% for story in stories %}
                     <tr>
-                        <td><a href="/project/{{ project.id }}/">{{ project.name }}</a></td>
-                        <td>{{ project.description|default('') }}</td>
+                        <td><a href="{{ story.url }}" target="_blank">{{ story.name }}</a></td>
+                        <td><input class="story_number" type="text" value="[#{{ story.id }}]" /></td>
+                        <td>{{ story.owner_initials|join(', ') }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
         <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="/js/stories.js"></script>
     </body>
 </html>

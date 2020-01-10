@@ -43,9 +43,9 @@ function generate_iterations_based_on_starting_label($starting_label, $number_of
 }
 
 $app->get('/', function(Silex\Application $app) use ($key, $project_id, $pivotal_tracker) {
-    $stories = $pivotal_tracker->getStories('owner:' . $owner . ' -state:unstarted -state:accepted');
+    $projects = $pivotal_tracker->getProjects();
     return $app['twig']->render('index.twig', array(
-        'stories' => $stories,
+        'projects' => $projects,
     ));
 });
 
@@ -95,7 +95,7 @@ $app->get('/my', function (Silex\Application $app) use ($key, $project_id, $owne
     $stories = $pivotal_tracker->getStories('owner:' . $owner . ' -state:unstarted -state:accepted');
     $memberships = $pivotal_tracker->getMemberships();
     populate_owner_initials($stories, $memberships);
-    return $app['twig']->render('index.twig', array(
+    return $app['twig']->render('stories.twig', array(
         'stories' => $stories,
     ));
 });
@@ -104,7 +104,7 @@ $app->get('/started', function (Silex\Application $app) use ($key, $project_id, 
     $stories = $pivotal_tracker->getStories('state:started');
     $memberships = $pivotal_tracker->getMemberships();
     populate_owner_initials($stories, $memberships);
-    return $app['twig']->render('index.twig', array(
+    return $app['twig']->render('stories.twig', array(
         'stories' => $stories,
     ));
 });
