@@ -49,6 +49,82 @@ $app->get('/', function(Silex\Application $app) use ($key, $project_id, $pivotal
     ));
 });
 
+$app->get('/project/{project_id}/', function(Silex\Application $app, $project_id) use ($key) {
+    $pivotal_tracker_client = new \PivotalTrackerV5\Client($key, $project_id);
+
+    $iterations = $pivotal_tracker_client->getProjectIterations(array(
+        'limit' => 10,
+        'offset' => -9,
+        'scope' => 'done_current',
+        'fields' => 'number,team_strength,accepted_points,effective_points,velocity,start,finish'
+    ));
+    $iterations = array_reverse($iterations);
+
+    return $app['twig']->render('project.twig', array(
+        'project_id' => $project_id,
+        'iterations' => $iterations
+    ));
+});
+
+$app->get('/project/{project_id}/iteration/{iteration_id}/', function(Silex\Application $app, $project_id, $iteration_id) use ($key) {
+    $pivotal_tracker_client = new \PivotalTrackerV5\Client($key, $project_id);
+
+    $iteration = $pivotal_tracker_client->getIteration($iteration_id, array(
+        'fields' => 'number,team_strength,accepted_points,effective_points,velocity,start,finish,stories(id,name,story_type,estimate,current_state,url,owner_ids),points,accepted,created,analytics'
+    ));
+
+    $memberships = $pivotal_tracker_client->getMemberships();
+    $people = array();
+    foreach ($memberships as $membership) {
+        $people[$membership->person->id] = $membership->person;
+    }
+
+    $results_per_person = array();
+    foreach ($iteration->stories as $story) {
+        if ($story->story_type == 'release') {
+            continue;
+        }
+
+        foreach ($story->owner_ids as $owner_id) {
+            if (!isset($results_per_person[$owner_id])) {
+                $result_per_person = new stdClass();
+                $result_per_person->name = $people[$owner_id]->name;
+                $result_per_person->bugs = 0;
+                $result_per_person->features = 0;
+                $result_per_person->chores = 0;
+                $result_per_person->points = 0;
+                $results_per_person[$owner_id] = $result_per_person;
+            }
+
+            $result_per_person = $results_per_person[$owner_id];
+            switch ($story->story_type) {
+                case 'bug':
+                    $result_per_person->bugs += 1;
+                    break;
+                case 'chore':
+                    $result_per_person->chores += 1;
+                    break;
+                case 'feature':
+                    $result_per_person->features += 1;
+                    break;
+            }
+            $result_per_person->points += $story->estimate;
+        }
+    }
+
+    usort($results_per_person, function($person_1, $person_2) {
+        return strcasecmp($person_1->name, $person_2->name);
+    });
+
+    return $app['twig']->render('iteration.twig', array(
+        'project_id' => $project_id,
+        'iteration_id' => $iteration_id,
+        'results_per_person' => $results_per_person,
+        'iteration' => $iteration
+    ));
+});
+
+
 $app->get('/ppp/{starting_label}', function (Request $request, Silex\Application $app, $starting_label) use ($key, $project_id, $pivotal_tracker, $team_initials) {
     $query_parameters = $request->query->all();
     $number_of_iterations = isset($query_parameters['number_of_iterations']) ? $query_parameters['number_of_iterations'] : 10;

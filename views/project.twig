@@ -1,0 +1,40 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Current Pivotal Work</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/index.css">
+        <meta http-equiv="refresh" content="60" />
+    </head>
+    <body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Iteration</th>
+                    <th>Velocity</th>
+                    <th>Accepted Points</th>
+                    <th>Team Strength</th>
+                    <th>Effective Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for iteration in iterations %}
+                    <tr>
+                        <td><a href="/project/{{ project_id }}/iteration/{{ iteration.number }}/">{{ iteration.start|date("m/d/Y") }} - {{ iteration.finish|date("m/d/Y") }}</a></td>
+                        <td>{{ iteration.velocity }}</td>
+                        <td>{{ iteration.accepted_points }}</td>
+                        <td>{{ (iteration.team_strength * 100)|number_format(2) }}%</td>
+                        <td>{{ iteration.effective_points|number_format(2) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
+</html>
