@@ -1,8 +1,5 @@
 {
     "require": {
-        "silex/silex": "~1.3",
-        "chicohernando/pivotal-tracker-api": "1.2.4",
-        "twig/twig": "^1.22",
-        "symfony/twig-bridge": "^2.7"
+        "chicohernando/pivotal-tracker-api": "1.2.4"
     }
 }
