@@ -1,0 +1,36 @@
+{% dump(notifications) %}
+<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+    <span>
+        <i class="notika-icon notika-alarm"></i>
+    </span>
+    <div class="spinner4 spinner-4"></div>
+    <div class="ntd-ctn">
+        <span>{{ notifications|length }}</span>
+    </div>
+</a>
+<div role="menu" class="dropdown-menu message-dd notification-dd animated zoomIn">
+    <div class="hd-mg-tt">
+        <h2>Notification</h2>
+    </div>
+    <div class="hd-message-info">
+        {% for notification in notifications %}
+            {% if notification.comment_id is defined %}
+                <a href="https://www.pivotaltracker.com/story/show/{{ notification.story.id }}/comments/{{ notification.comment_id }}">
+            {% else %}
+                <a href="https://www.pivotaltracker.com/story/show/{{ notification.story.id }}/">
+            {% endif %}
+            <div class="hd-message-sn">
+                <div class="hd-mg-ctn">
+                    <h3>{{ notification.project.name }}</h3>
+                    <h4>{{ notification.performer.name }}</h4>
+                    {% if notification.context is defined %}
+                        <p>{{ notification.context }}</p>
+                    {% elseif notification.message is defined %}
+                        <p>{{ notification.message }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
