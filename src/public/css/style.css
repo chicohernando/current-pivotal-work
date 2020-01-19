@@ -274,28 +274,40 @@ body {}
     padding: 10px 15px;
 }
 .hd-mg-ctn h3{
-	font-size:14px;
-	color:#333;
+	font-size:12px;
+	color:#bbb;
+	margin-bottom:5px;
+}
+.hd-mg-ctn h4{
+	font-size:11px;
 	margin-bottom:5px;
 }
 .hd-mg-ctn p{
-	font-size:14px;
+	font-size:11px;
 	color:#333;
 	margin:0;
 	overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 .hd-message-img {
     width: 100px;
 	margin-right: 15px;
 }
 .hd-mg-ctn {
-    width: 210px;
+    width: 100%;
     margin-top: 5px;
 }
+.hd-message-info {
+    height: 40vh;
+    overflow-y: auto;
+}
+
+.hd-message-info a {
+    border-bottom: 1px solid #00c292;
+}
+
 .hd-message-info a:hover{
-	background:#F6F8FA;
+    background:#F6F8FA;
 }
 .header-top-menu .nav.notika-top-nav li .message-dd .hd-mg-va a{
 	font-size: 14px;
@@ -361,7 +373,7 @@ body {}
 .ntd-ctn {
 	position: absolute;
     top: 8px;
-    left: -8px;
+    left: 40px;
     font-size: 10px;
     background: #e46a76;
     height: 18px;
@@ -378,7 +390,7 @@ body {}
     position: absolute;
     display: inline-block;
     top: 3px;
-    left: -14px;
+    left: 34px;
 }
 .spinner4:after, .spinner4:before {
   content: "";

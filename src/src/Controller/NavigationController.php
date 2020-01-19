@@ -14,8 +14,18 @@ class NavigationController extends AbstractController
         usort($projects, function($project_1, $project_2) {
             return strcasecmp($project_1->name, $project_2->name);
         });
-        return $this->render('navigation/_projects.html.twig', array(
+
+        return $this->render('navigation/_projects.html.twig', [
             'projects' => $projects,
-        ));
+        ]);
+    }
+
+    public function notificationList() {
+        $pivotal_tracker_client = new Client($_ENV['PIVOTAL_TRACKER_API_KEY'], '');
+        $notifications = $pivotal_tracker_client->getMyNotifications();
+        
+        return $this->render('navigation/_notifications.html.twig', [
+            'notifications' => $notifications
+        ]);
     }
 }

@@ -17,6 +17,7 @@
     "require-dev": {
         "symfony/asset": "5.0.*",
         "symfony/debug-bundle": "5.0.*",
+        "symfony/debug-pack": "^1.0",
         "symfony/var-dumper": "5.0.*"
     },
     "config": {
