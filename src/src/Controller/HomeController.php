@@ -15,10 +15,11 @@ class HomeController extends AbstractController
     public function index()
     {
         $pivotal_tracker_client = new Client($_ENV['PIVOTAL_TRACKER_API_KEY'], '');
-        $projects = $pivotal_tracker_client->getProjects();
+        $projects = $pivotal_tracker_client->getProjects(['fields' => 'name,description,point_scale,current_velocity,current_volatility,created_at']);
         usort($projects, function($project_1, $project_2) {
             return strcasecmp($project_1->name, $project_2->name);
         });
+        
         return $this->render('index.html.twig', [
             'projects' => $projects
         ]);
