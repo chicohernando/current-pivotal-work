@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "chicohernando/pivotal-tracker-api",
-            "version": "1.2.5",
+            "version": "1.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chicohernando/pivotal-tracker-api.git",
-                "reference": "78b2d09454a3bfc222f6217eb3d79f73458374df"
+                "reference": "92a2efcd8ef9d078526ae5ee7f61a82e1c5adbb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chicohernando/pivotal-tracker-api/zipball/78b2d09454a3bfc222f6217eb3d79f73458374df",
-                "reference": "78b2d09454a3bfc222f6217eb3d79f73458374df",
+                "url": "https://api.github.com/repos/chicohernando/pivotal-tracker-api/zipball/92a2efcd8ef9d078526ae5ee7f61a82e1c5adbb8",
+                "reference": "92a2efcd8ef9d078526ae5ee7f61a82e1c5adbb8",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,7 @@
                 "pivotaltracker",
                 "v5"
             ],
-            "time": "2020-01-19T22:07:40+00:00"
+            "time": "2020-01-19T22:34:07+00:00"
         },
         {
             "name": "doctrine/annotations",
