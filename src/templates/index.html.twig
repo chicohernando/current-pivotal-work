@@ -1,4 +1,45 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    Hello, World!
+    <!-- Start Available Projects Area -->
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="basic-tb-hd">
+                            <h2>Your Projects</h2>
+                            <p>These are the Projects that you have access to</p>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Point Scale</th>
+                                        <th>Current Velocity</th>
+                                        <th>Current Volatility</th>
+                                        <th>Age</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for project in projects %}
+                                        <tr>
+                                            <td><a href="{{ path('project_detail', {project_id: project.id }) }}">{{ project.name }}</a></td>
+                                            <td>{{ project.description|default('') }}</td>
+                                            <td>{{ project.point_scale }}</td>
+                                            <td>{{ project.current_velocity }}</td>
+                                            <td>{{ project.current_volatility }}%</td>
+                                            <td>{{ project.created_at|date('m/d/Y') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Available Projects Area -->
 {% endblock %}
