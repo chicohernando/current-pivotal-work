@@ -1,10 +1,71 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <!-- Start Iteration Details Area -->
     <div class="container">
-        <p>
-            Hello World!
-        </p>
+        <div class="row the-space-beneath">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-content">
+                    <h2>{{ project.name }}: {{ iteration.start|date("m/d/Y") }} - {{ iteration.finish|date("m/d/Y") }}</h2>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <h4>Velocity</h4>
+                                <p class="statistic">{{ iteration.velocity }}</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <h4>Accepted Points</h4>
+                                <p class="statistic">{{ iteration.accepted_points }}</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <h4>Team Strength</h4>
+                                <p class="statistic">{{ (iteration.team_strength * 100)|number_format(2) }}%</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <h4>Effective Points</h4>
+                                <p class="statistic">{{ iteration.effective_points }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Start Iteration Details Area -->
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="basic-tb-hd">
+                            <h2>Points per Person</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Bugs</th>
+                                        <th>Features</th>
+                                        <th>Chores</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result_per_person in results_per_person %}
+                                        <tr>
+                                            <td>{{ result_per_person.name }}</td>
+                                            <td>{{ result_per_person.bugs }}</td>
+                                            <td>{{ result_per_person.features }}</td>
+                                            <td>{{ result_per_person.chores }}</td>
+                                            <td>{{ result_per_person.points }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- End Iteration Details Area -->
 {% endblock %}
