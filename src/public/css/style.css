@@ -183,6 +183,11 @@ body {}
     padding: 20px;
     background-color: #fff;
 }
+
+.section-content h2 {
+    margin: 0;
+}
+
 .statistic {
     font-size: 20px;
     color:#333;
