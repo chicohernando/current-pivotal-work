@@ -227,12 +227,23 @@
                             <nav id="dropdown">
                                 <ul class="mobile-menu-nav">
                                     <li><a href="/">Home</a></li>
+                                    
                                     <li>
-                                        <a data-toggle="collapse" data-target="#demoevent" href="#">Projects</a>
-                                        <ul id="demoevent" class="collapse dropdown-header-top">
+                                        <a data-toggle="collapse" data-target="#navigationprojects" href="#">Projects</a>
+                                        <ul id="navigationprojects" class="collapse dropdown-header-top">
                                             {{ render(controller('App\\Controller\\NavigationController::projectList')) }}
                                         </ul>
                                     </li>
+
+                                    {% if project is defined %}
+                                        <li>
+                                            <a data-toggle="collapse" data-target="#navigationiterations" href="#">Recent Iterations</a>
+                                            <ul id="#navigationiterations" class="collapse dropdown-header-top">
+                                                {{ render(controller('App\\Controller\\NavigationController::iterationList', {'project_id': project.id})) }}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+
                                     {#
                                     
                                     <li><a data-toggle="collapse" data-target="#democrou" href="#">Interface</a>
@@ -324,6 +335,9 @@
                             
                             <li {% if app.request.attributes.get( '_route' ) starts with 'app_home_' %}class="active"{% endif %}><a href="/"><i class="notika-icon notika-house"></i> Home</a></li>
                             <li {% if app.request.attributes.get( '_route' ) starts with 'project_' %}class="active"{% endif %}><a data-toggle="tab" href="#projects"><i class="notika-icon notika-windows"></i> Projects</a></li>
+                            {% if project is defined %}
+                                <li {% if app.request.attributes.get( '_route' ) starts with 'iteration_' %}class="active"{% endif %}><a data-toggle="tab" href="#iterations"><i class="notika-icon notika-calendar"></i> Recent Iterations</a></li>
+                            {% endif %}
 
                             {#
                                 <li><a data-toggle="tab" href="#Interface"><i class="notika-icon notika-edit"></i> Interface</a></li>
@@ -339,11 +353,20 @@
                                 <ul class="notika-main-menu-dropdown">
                                 </ul>
                             </div>
+                            
                             <div id="projects" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'project_' %}in active{% endif %} notika-tab-menu-bg animated flipInX">
                                 <ul class="notika-main-menu-dropdown">
                                     {{ render(controller('App\\Controller\\NavigationController::projectList')) }}
                                 </ul>
                             </div>
+
+                            {% if project is defined %}
+                                <div id="iterations" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'iteration_' %}in active{% endif %} notika-tab-menu-bg animated flipInX">
+                                    <ul class="notika-main-menu-dropdown">
+                                        {{ render(controller('App\\Controller\\NavigationController::iterationList', {'project_id': project.id})) }}
+                                    </ul>
+                                </div>
+                            {% endif %}
 
                             {#
 
