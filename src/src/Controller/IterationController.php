@@ -19,9 +19,15 @@ class IterationController extends AbstractController
         $iteration = $pivotal_tracker_client->getIteration($iteration_id, ['fields' => 'number,team_strength,accepted_points,effective_points,velocity,start,finish,stories(id,name,story_type,estimate,current_state,url,owner_ids),points,accepted,created,analytics']);
 
         $memberships = $pivotal_tracker_client->getMemberships();
+        $inactive_memberships = $pivotal_tracker_client->getProject($project_id, ['fields' => 'inactive_memberships'])->inactive_memberships;
+        
         $people = array();
         foreach ($memberships as $membership) {
             $people[$membership->person->id] = $membership->person;
+        }
+
+        foreach ($inactive_memberships as $inactive_membership) {
+            $people[$inactive_membership->person->id] = $inactive_membership->person;
         }
 
         $results_per_person = array();
