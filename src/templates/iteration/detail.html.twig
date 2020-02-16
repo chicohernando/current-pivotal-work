@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    {{ project.name }}: {{ iteration.start|date("m/d/Y") }} - {{ iteration.finish|date("m/d/Y") }} Iteration Details
+{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row the-space-beneath">
