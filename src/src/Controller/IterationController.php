@@ -53,7 +53,10 @@ class IterationController extends AbstractController
                         $result_per_person->features += 1;
                         break;
                 }
-                $result_per_person->points += $story->estimate;
+
+                if ($story->current_state == 'accepted') {
+                    $result_per_person->points += $story->estimate;
+                }
             }
         }
 
