@@ -349,19 +349,19 @@
                             #}
                         </ul>
                         <div class="tab-content custom-menu-content">
-                            <div id="Home" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'app_home_' %}in active{% endif %} notika-tab-menu-bg animated flipInX">
+                            <div id="Home" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'app_home_' %}active{% endif %} notika-tab-menu-bg animated flipInX">
                                 <ul class="notika-main-menu-dropdown">
                                 </ul>
                             </div>
                             
-                            <div id="projects" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'project_' %}in active{% endif %} notika-tab-menu-bg animated flipInX">
+                            <div id="projects" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'project_' %}active{% endif %} notika-tab-menu-bg animated flipInX">
                                 <ul class="notika-main-menu-dropdown">
                                     {{ render(controller('App\\Controller\\NavigationController::projectList')) }}
                                 </ul>
                             </div>
 
                             {% if project is defined %}
-                                <div id="iterations" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'iteration_' %}in active{% endif %} notika-tab-menu-bg animated flipInX">
+                                <div id="iterations" class="tab-pane {% if app.request.attributes.get( '_route' ) starts with 'iteration_' %}active{% endif %} notika-tab-menu-bg animated flipInX">
                                     <ul class="notika-main-menu-dropdown">
                                         {{ render(controller('App\\Controller\\NavigationController::iterationList', {'project_id': project.id})) }}
                                     </ul>
