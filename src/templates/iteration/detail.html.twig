@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ project.name }}: {{ iteration.start|date("m/d/Y") }} - {{ iteration.finish|date("m/d/Y") }} Iteration Details
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row the-space-beneath">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-content">
+                    <h2><a href="{{ path('project_detail', {project_id: project.id }) }}">{{ project.name }}</a>: {{ iteration.start|date("m/d/Y") }} - {{ iteration.finish|date("m/d/Y") }} Iteration Details</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row the-space-beneath">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="statistic-inner">
+                    <h4>Velocity</h4>
+                    <span class="statistic">{{ iteration.velocity }}</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="statistic-inner">
+                    <h4>Accepted Points</h4>
+                    <span class="statistic">{{ iteration.accepted_points }}</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="statistic-inner">
+                    <h4>Team Strength</h4>
+                    <span class="statistic">{{ (iteration.team_strength * 100)|number_format(2) }}%</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="statistic-inner">
+                    <h4>Effective Points</h4>
+                    <span class="statistic">{{ iteration.effective_points|number_format(2) }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Start Iteration Details Area -->
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="basic-tb-hd">
+                            <h2>Points per Person</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result_per_person in results_per_person %}
+                                        <tr>
+                                            <td>{{ result_per_person.name }}</td>
+                                            <td>{{ result_per_person.points }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="basic-tb-hd">
+                            <h2>Bugs per Person</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Bugs</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result_per_person in results_per_person %}
+                                        <tr>
+                                            <td>{{ result_per_person.name }}</td>
+                                            <td>{{ result_per_person.bugs }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="basic-tb-hd">
+                            <h2>Features per Person</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Features</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result_per_person in results_per_person %}
+                                        <tr>
+                                            <td>{{ result_per_person.name }}</td>
+                                            <td>{{ result_per_person.features }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="basic-tb-hd">
+                            <h2>Chores per Person</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Chores</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result_per_person in results_per_person %}
+                                        <tr>
+                                            <td>{{ result_per_person.name }}</td>
+                                            <td>{{ result_per_person.chores }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Iteration Details Area -->
+{% endblock %}

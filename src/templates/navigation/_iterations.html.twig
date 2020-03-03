@@ -1,0 +1,3 @@
+{% for iteration in iterations %}
+    <li><a href="{{ path('iteration_detail', {project_id: project_id, iteration_id: iteration.number }) }}">{{ iteration.start|date("m/d/Y") }} - {{ iteration.finish|date("m/d/Y") }}</a></li>
+{% endfor %}
