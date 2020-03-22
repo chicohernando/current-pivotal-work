@@ -108,3 +108,12 @@
     </div>
     <!-- End Recent Iterations Area -->
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- sparkline JS -->
+    <script src="{{ asset('js/sparkline/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('js/sparkline/sparkline-active.js') }}"></script>
+    <!-- Data Table JS -->
+    <script src="{{ asset('js/data-table/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/data-table/data-table-act.js') }}"></script>
+{% endblock %}

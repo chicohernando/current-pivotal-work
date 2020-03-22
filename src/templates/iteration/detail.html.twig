@@ -149,3 +149,9 @@
     </div>
     <!-- End Iteration Details Area -->
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Data Table JS -->
+    <script src="{{ asset('js/data-table/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/data-table/data-table-act.js') }}"></script>
+{% endblock %}
